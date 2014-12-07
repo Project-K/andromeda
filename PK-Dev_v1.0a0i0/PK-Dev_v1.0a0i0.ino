@@ -14,7 +14,7 @@ void setup()
   
   Serial.begin(9600);        // start serial for output
   SeeedOled.clearDisplay(); // Completely clear OLED
-
+//another hello
 }
 
 void loop()
