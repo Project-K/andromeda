@@ -8,7 +8,7 @@
 int pin = 2;
 unsigned long duration;
 unsigned long starttime;
-unsigned long sampletime_ms = 1000;//sampe 30s ;
+unsigned long sampletime_ms = 1000; //sampe 1s ;
 unsigned long lowpulseoccupancy = 0;
 float ratio = 0;
 float concentration = 0;
@@ -17,15 +17,14 @@ void setup()
 {
   Wire.begin();
   SeeedOled.init();  //initialze SEEED OLED display
-  DDRB|=0x21;        //digital pin 8, LED glow indicates Film properly Connected .
-  PORTB |= 0x21;
+
   TH02.begin(); //Begin Temperature sensor
   
   Serial.begin(9600);        // start serial for output
   SeeedOled.clearDisplay(); // Completely clear OLED
   
   //Dust Sensor
-  pinMode(2,INPUT);
+  pinMode(pin,INPUT);
   starttime = millis();//get the current time;
 
 }
@@ -43,12 +42,10 @@ void loop()
   
   Serial.print("Temp: ");  
   Serial.print(temper);
-  Serial.print(" C");
-  Serial.println();
+  Serial.print(" C ");
   Serial.print("Humi: ");
   Serial.print(humidity);
-  Serial.print(" %");
-   Serial.println(); 
+  Serial.print(" % ");
   
   SeeedOled.setTextXY(1,0);          //Set the cursor to Xth Page, Yth Column 
   SeeedOled.putString("Temp: "); 
@@ -62,8 +59,7 @@ void loop()
   duration = pulseIn(pin, LOW);
   lowpulseoccupancy = lowpulseoccupancy+duration;
 
-  if ((millis()-starttime) > sampletime_ms)//if the sampel time == 30s
-  {
+
     ratio = lowpulseoccupancy/(sampletime_ms*10.0);  // Integer percentage 0=>100
     concentration = 1.1*pow(ratio,3)-3.8*pow(ratio,2)+520*ratio+0.62; // using spec sheet curve
     Serial.print("LPO: ");
@@ -89,12 +85,7 @@ void loop()
     SeeedOled.putFloat(concentration); //Print the String
     
     lowpulseoccupancy = 0;
-    starttime = millis();
     
-
-    
-  }
-  Serial.println("************");
   delay(1000);
 }
 
