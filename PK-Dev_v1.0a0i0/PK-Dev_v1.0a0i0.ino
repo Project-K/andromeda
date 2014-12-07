@@ -10,11 +10,9 @@ void setup()
   SeeedOled.init();  //initialze SEEED OLED display
   DDRB|=0x21;        //digital pin 8, LED glow indicates Film properly Connected .
   PORTB |= 0x21;
-//hello
   TH02.begin(); //Begin Temperature sensor
   
   Serial.begin(9600);        // start serial for output
-  
   SeeedOled.clearDisplay(); // Completely clear OLED
 
 }
