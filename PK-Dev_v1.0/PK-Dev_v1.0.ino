@@ -39,6 +39,7 @@ void loop()
 {
   duration = pulseIn(pin, LOW);
   lowpulseoccupancy = lowpulseoccupancy + duration;
+  
   if ((millis()-starttime) > sampletime_ms);
   {
     float temper = TH02.ReadTemperature(); 
@@ -58,23 +59,23 @@ void loop()
         Serial.print(concentration);
         Serial.println(" ");
     
-    SeeedOled.setTextXY(0,0);          //Set the cursor to Xth Page, Yth Column 
+    SeeedOled.setTextXY(0,0);           //Set the cursor to Xth Page, Yth Column 
         SeeedOled.putString("Temp: "); 
-        SeeedOled.putFloat(temper); //Print the String
+        SeeedOled.putFloat(temper);     //Print the String
         SeeedOled.putString(" C"); 
     
-    SeeedOled.setTextXY(1,0);          //Set the cursor to Xth Page, Yth Column
-        SeeedOled.putString("Humi: ");  
-        SeeedOled.putFloat(humidity); //Print the String
-        SeeedOled.putString(" %");
+    SeeedOled.setTextXY(1,0);           //Set the cursor to Xth Page, Yth Column
+        SeeedOled.putString("Humi: "); SeeedOled.putFloat(humidity); SeeedOled.putString(" %");  //Print the String
+        
       
-    SeeedOled.setTextXY(3,0);          //Set the cursor to Xth Page, Yth Column
+    SeeedOled.setTextXY(2,0);           //Set the cursor to Xth Page, Yth Column
         SeeedOled.putString("Conc: ");  
         SeeedOled.putFloat(concentration,2); //Print the String
+    
     SeeedOled.putString(" #");
     
     lowpulseoccupancy = 0;
     starttime = millis();
-  }
-}
+  } //End of if statement
+}//End of loop
 
